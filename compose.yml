@@ -1,0 +1,27 @@
+services:
+  app:
+    image: bitnami/laravel:latest
+    container_name: app-laravel
+    environment:
+      DB_HOST: db-laravel
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app:rw
+
+  db:
+    image: mariadb:latest
+    container_name: db-laravel
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql/${DB_DATABASE}
